@@ -1,0 +1,163 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: orat
+  # Location required to calculate the time the sun rises and sets
+  latitude: 222.1061
+  longitude: 32.3527
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 0
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+#  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: csia/B
+  # Customization file
+  customize: !include customize.yaml
+
+
+# Configure a default setup of Home Assistant (frontend, api, etc)
+default_config:
+
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+#http:
+#   base_url: example.duckdns.org:8123
+
+
+# Sensors
+sensor:
+  # Weather prediction
+#  - platform: yr
+  - platform: darksky
+    api_key: xxxxxxxxxxxxxxxxxxxxxxxxxxxx
+    monitored_conditions: # 监测内容，可选
+#      - summary
+#       - precip_type    
+#       - precip_intensity    
+#       - precip_probability    
+      - temperature   
+      - apparent_temperature
+#      - dew_point    
+#      - wind_speed    
+#      - wind_bearing    
+#      - cloud_cover    
+      - humidity
+      - pressure    
+      - visibility    
+#      - ozone    
+#      - minutely_summary    
+#      - hourly_summary    
+#      - daily_summary    
+#      - temperature_max  
+#      - temperature_min    
+#      - apparent_temperature_max    
+#      - apparent_temperature_min    
+#      - precip_intensity_max    
+      - uv_index    
+    scan_interval:
+      days: 0
+      hours: 0
+      minutes: 3
+      seconds: 30
+      milliseconds: 0
+
+
+# Text to speech
+tts:
+  - platform: google_translate
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+ 
+#add xiaomi gateway
+xiaomi_aqara:
+  gateways:
+    - mac: xxxxxxxxx
+      key: 1jllxxxxxxxxx
+
+#add xiaomi plug
+switch:
+  - platform: xiaomi_miio
+    name: Aquarium lamp
+    host: 
+    token: 
+  - platform: xiaomi_miio
+    name: Range hoods
+    host: 
+    token: 
+  - platform: xiaomi_miio
+    name: South balcony fan
+    host: 
+    token: 
+  - platform: xiaomi_miio
+    name: Power amplifier
+    host: 
+    token: 
+#add xiaomi air purifier
+fan:
+  - platform: xiaomi_miio
+    host: 
+    token: 
+    name: air purifier
+    model: zhimi.airpurifier.v6
+    
+
+#add group
+group:
+  living_room:
+    name: living room
+    entities:
+      - light.gateway_light_286c0788b4c4 
+      - switch.wall_switch_158d00013f83df 
+      - switch.wall_switch_158d00013f845e
+      - switch.wall_switch_158d00013e6b4f 
+      - switch.aquarium_lamp
+      - switch.plug_158d000153de1f 
+      - switch.yin_xiang_dian_yuan
+      - fan.air_purifier
+  kitchen_room:
+    name: kitchen room
+    entities:
+      - switch.wall_switch_left_158d0002234aaf 
+      - switch.wall_switch_right_158d0002234aaf   
+      - switch.chou_you_yan_ji 
+  south_balcony:
+    name: south balcony
+    entities: 
+      - switch.nan_yang_tai_tong_feng
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+
+
+
+
+
+
+
+
+
